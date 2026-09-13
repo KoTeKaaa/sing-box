@@ -1606,7 +1606,12 @@ jobs:
         run: |-
           make -C clients/apple build_ios_deb
           mkdir -p dist
-          cp "clients/apple/build/jailbreak/SFI-${VERSION}-iphoneos-arm64.deb" dist
+          deb=$(find clients/apple/build/jailbreak -maxdepth 1 -type f -name 'SFI-*-iphoneos-arm64.deb' -print -quit)
+          if [[ -z "$deb" ]]; then
+            echo "iOS jailbreak .deb not found" >&2
+            exit 1
+          fi
+          cp "$deb" dist/
         env:
           XCODEBUILD_CLONED_SOURCE_PACKAGES_DIR_PATH: ${{ runner.temp }}/SourcePackages
       - name: Report cache directory sizes
