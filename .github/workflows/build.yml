@@ -1292,7 +1292,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libbox-apple-${{ matrix.artifact }}
-          path: dist
+          path: sing-box/dist
           compression-level: 1
   build_apple:
     name: Build Apple release clients
