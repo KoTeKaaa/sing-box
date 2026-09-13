@@ -10,6 +10,7 @@ const (
 	TypeDNS                = "dns"
 	TypeSOCKS              = "socks"
 	TypeHTTP               = "http"
+	TypeOpenFlux           = "openflux"
 	TypeMixed              = "mixed"
 	TypeShadowsocks        = "shadowsocks"
 	TypeSnell              = "snell"
