@@ -1218,6 +1218,9 @@ jobs:
     if: github.event_name != 'workflow_dispatch' || inputs.build == 'All' || inputs.build == 'Apple' || inputs.build == 'Apple-release' || inputs.build == 'iOS' || inputs.build == 'macOS' || inputs.build == 'tvOS' || inputs.build == 'macOS-standalone' || inputs.build == 'iOS-jailbreak'
     needs:
       - calculate_version
+    defaults:
+      run:
+        working-directory: sing-box
     strategy:
       fail-fast: false
       matrix:
@@ -1235,11 +1238,19 @@ jobs:
             platform: macos/amd64
             build: ${{ github.event_name != 'workflow_dispatch' || inputs.build == 'All' || inputs.build == 'Apple' || inputs.build == 'Apple-release' || inputs.build == 'macOS' || inputs.build == 'macOS-standalone' }}
     steps:
-      - name: Checkout
+      - name: Checkout sing-box
         if: matrix.build
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
         with:
           fetch-depth: 1
+          path: sing-box
+      - name: Checkout OpenFlux
+        if: matrix.build
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        with:
+          repository: KoTeKaaa/OpenFlux-IOS
+          fetch-depth: 1
+          path: OpenFlux
       - name: Setup Go
         if: matrix.build
         uses: actions/setup-go@v5
